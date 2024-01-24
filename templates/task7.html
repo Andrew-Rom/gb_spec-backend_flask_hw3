@@ -1,0 +1,55 @@
+{% extends 'common.html' %}
+
+{% block title %}
+  Задание 7
+{% endblock %}
+
+{% block header %}
+  Задание 7
+{% endblock %}
+
+{% block content %}
+  <p class="text">Создайте форму регистрации пользователей в приложении Flask. Форма должна
+    содержать поля: имя, фамилия, email, пароль и подтверждение пароля. При отправке
+    формы данные должны валидироваться на следующие условия:</p>
+  <ul>
+    <li class="text">- Все поля обязательны для заполнения.</li>
+    <li class="text">- Поле email должно быть валидным email адресом.</li>
+    <li class="text">- Поле пароль должно содержать не менее 8 символов, включая хотя бы одну букву и одну цифру.</li>
+    <li class="text">- Поле подтверждения пароля должно совпадать с полем пароля.</li>
+    <li class="text">- Если данные формы не прошли валидацию, на странице должна быть
+      выведена соответствующая ошибка.</li>
+    <li class="text">- Если данные формы прошли валидацию, на странице должно быть выведено
+      сообщение об успешной регистрации</li>
+  </ul>
+  <p class="title">Решение</p>
+  <h3 style="text-align: center; text-transform: uppercase;">Форма регистрации пользователя</h3>
+  <form method="POST" action="{{ url_for('task7') }}">
+    {{ form.csrf_token }}
+    {% for field in form if field.name != 'csrf_token' %}
+      <p>
+        {{ field.label }}<br>
+        {{ field }}
+        {% if field.errors %}
+          <ul style="color: red">
+            {% for error in field.errors %}
+              {{ error }}
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </p>
+    {% endfor %}
+    <p>
+      <input class="btn" type="submit" value="Зарегистрироваться">
+    </p>
+  </form>
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <ul>
+        {% for message in messages %}
+          <li style="text-align: center">{{ message }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
+{% endblock %}

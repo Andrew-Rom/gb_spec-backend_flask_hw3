@@ -1,0 +1,45 @@
+{% extends 'common.html' %}
+
+{% block title %}
+  Задание 8
+{% endblock %}
+
+{% block header %}
+  Задание 8
+{% endblock %}
+
+{% block content %}
+  <p class="text">Создать форму для регистрации пользователей на сайте.</p>
+  <p class="text">Форма должна содержать поля "Имя", "Фамилия", "Email", "Пароль" и кнопку "Зарегистрироваться".</p>
+  <p class="text">При отправке формы данные должны сохраняться в базе данных, а пароль должен быть зашифрован.</p>
+  <p class="title">Решение</p>
+  <h3 style="text-align: center; text-transform: uppercase;">Форма регистрации пользователя</h3>
+  <form method="POST" action="{{ url_for('task8') }}">
+    {{ form.csrf_token }}
+    {% for field in form if field.name != 'csrf_token' %}
+      <p>
+        {{ field.label }}<br>
+        {{ field }}
+        {% if field.errors %}
+          <ul style="color: red">
+            {% for error in field.errors %}
+              {{ error }}
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </p>
+    {% endfor %}
+    <p>
+      <input class="btn" type="submit" value="Зарегистрироваться">
+    </p>
+  </form>
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <ul>
+        {% for message in messages %}
+          <li style="text-align: center">{{ message }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
+{% endblock %}

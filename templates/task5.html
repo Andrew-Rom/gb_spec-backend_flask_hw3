@@ -1,0 +1,40 @@
+{% extends 'common.html' %}
+
+{% block title %}
+  Задание 5
+{% endblock %}
+
+{% block header %}
+  Задание 5
+{% endblock %}
+
+{% block content %}
+  <p class="text">Создайте форму регистрации пользователя.</p>
+  <p class="text">Форма должна содержать поля: имя, электронная почта, пароль (с подтверждением),
+    дата рождения, согласие на обработку персональных данных.</p>
+  <p class="text">Валидация должна проверять, что все поля заполнены корректно
+    (например, дата рождения должна быть в формате дд.мм.гггг).</p>
+  <p class="text">При успешной регистрации пользователь должен быть перенаправлен
+    на страницу подтверждения регистрации.</p>
+  <p class="title">Решение</p>
+  <h3 style="text-align: center; text-transform: uppercase;">Форма регистрации пользователя</h3>
+  <form method="POST" action="{{ url_for('task5') }}">
+    {{ form.csrf_token }}
+    {% for field in form if field.name != 'csrf_token' %}
+      <p>
+        {{ field.label }}<br>
+        {{ field }}
+        {% if field.errors %}
+          <ul style="color: red">
+            {% for error in field.errors %}
+              {{ error }}
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </p>
+    {% endfor %}
+    <p>
+      <input class="btn" type="submit" value="Зарегистрироваться">
+    </p>
+  </form>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'common.html' %}
+
+{% block title %}
+  Задание 1
+{% endblock %}
+
+{% block header %}
+  Задание 1
+{% endblock %}
+
+{% block content %}
+  <p class="text">Создать базу данных для хранения информации о студентах университета.</p>
+  <p class="text">База данных должна содержать две таблицы: "Студенты" и "Факультеты".</p>
+  <p class="text">В таблице "Студенты" должны быть следующие поля:</p>
+  <ul>
+    <li class="text">- id,</li>
+    <li class="text">- имя,</li>
+    <li class="text">- фамилия,</li>
+    <li class="text">- возраст,</li>
+    <li class="text">- пол,</li>
+    <li class="text">- группа</li>
+    <li class="text">- id факультета.</li>
+  </ul>
+  <p class="text">В таблице "Факультеты" должны быть следующие поля: id и название факультета.</p>
+  <p class="text">Необходимо создать связь между таблицами "Студенты" и "Факультеты".</p>
+  <p class="text">Написать функцию-обработчик, которая будет выводить список всех студентов
+    с указанием их факультета.</p>
+  <p class="title">Решение</p>
+  {% for student in students %}
+    <p class="text">{{ student }} c факультета: {{ student.faculty }}</p>
+  {% endfor %}
+
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'common.html' %}
+
+{% block title %}
+  Задание 6
+{% endblock %}
+
+{% block header %}
+  Задание 6
+{% endblock %}
+
+{% block content %}
+  <p class="text">Создайте форму для регистрации пользователей в вашем веб-приложении.</p>
+  <p class="text">Форма должна содержать следующие поля: имя пользователя, электронная почта,
+    пароль и подтверждение пароля.</p>
+  <p class="text">Все поля обязательны для заполнения, и электронная почта должна быть валидным адресом.</p>
+  <p class="text">После отправки формы, выведите успешное сообщение об успешной регистрации.</p>
+  <p class="title">Решение</p>
+  <h3 style="text-align: center; text-transform: uppercase;">Форма регистрации пользователя</h3>
+  <form method="POST" action="{{ url_for('task6') }}">
+    {{ form.csrf_token }}
+    {% for field in form if field.name != 'csrf_token' %}
+      <p>
+        {{ field.label }}<br>
+        {{ field }}
+        {% if field.errors %}
+          <ul style="color: red">
+            {% for error in field.errors %}
+              {{ error }}
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </p>
+    {% endfor %}
+    <p>
+      <input class="btn" type="submit" value="Зарегистрироваться">
+    </p>
+  </form>
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <ul>
+        {% for message in messages %}
+          <li style="text-align: center">{{ message }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
+{% endblock %}

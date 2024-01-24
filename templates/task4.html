@@ -1,0 +1,50 @@
+{% extends 'common.html' %}
+
+{% block title %}
+  Задание 4
+{% endblock %}
+
+{% block header %}
+  Задание 4
+{% endblock %}
+
+{% block content %}
+  <p class="text">Создайте форму регистрации пользователя с использованием Flask-WTF.
+    Форма должна содержать следующие поля:</p>
+  <ul>
+    <li class="text">- Имя пользователя (обязательное поле),</li>
+    <li class="text">- Электронная почта (обязательное поле, с валидацией на корректность ввода email),</li>
+    <li class="text">- Пароль (обязательное поле, с валидацией на минимальную длину пароля),</li>
+    <li class="text">- Подтверждение пароля (обязательное поле, с валидацией на совпадение с паролем),</li>
+  </ul>
+  <p class="text">После отправки формы данные должны сохраняться в базе данных (можно использовать SQLite)
+    и выводиться сообщение об успешной регистрации. Если какое-то из обязательных полей не
+    заполнено или данные не прошли валидацию, то должно выводиться соответствующее сообщение об ошибке.</p>
+  <p class="text">Дополнительно: добавьте проверку на уникальность имени пользователя и электронной почты в
+    базе данных. Если такой пользователь уже зарегистрирован, то должно выводиться сообщение об ошибке.</p>
+
+  <p class="title">Решение</p>
+  <h3 style="text-align: center; text-transform: uppercase;">Форма регистрации пользователя</h3>
+  <form method="POST" action="{{ url_for('task4') }}">
+    {{ form.csrf_token }}
+    {% for field in form if field.name != 'csrf_token' %}
+      <p>
+        {{ field.label }}<br>
+        {{ field }}
+        {% if field.errors %}
+          <ul style="color: red">
+            {% for error in field.errors %}
+              {{ error }}
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </p>
+    {% endfor %}
+    <p>
+      <input class="btn" type="submit" value="Зарегистрироваться">
+    </p>
+  </form>
+  {% if msg: %}
+    <p style="text-align: center; text-transform: uppercase;">{{ msg }}</p>
+  {% endif %}
+{% endblock %}
